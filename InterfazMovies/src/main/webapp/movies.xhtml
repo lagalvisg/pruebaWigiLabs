@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Movies</title>
+		<h:outputStylesheet name="css/style.css"/>
+	</h:head>
+	
+	<h:body style="background-color:blue;"> 
+ 
+<h:form id="form">
+ <h:outputText value="Nombre:" />
+ <h:outputText value="#{userLoginView.usuario.nombre}" />
+ <br/>
+  <h:outputText value="Apellido:" />
+ <h:outputText value="#{userLoginView.usuario.apellido}" />
+ <br/>
+  <h:outputText value="Correo:" />
+ <h:outputText value="#{userLoginView.userProfileID}" />
+ <br/>
+  <h:outputText value="#Documento:" />
+ <h:outputText value="#{userLoginView.documentNumber}" />
+ <br/>
+
+    <p:carousel id = "carousel" value="#{imagesView.movies}" headerText="Movies" var="movie" itemStyle="height:400px;text-align:center" numVisible="1" easing="easeOutBounce" 
+    style="width:500px" circular="true" >
+        <h:panelGrid  columns="2" style="width:100%" columnClasses="label,value">
+            <f:facet name="header">
+                <p:graphicImage name="images/#{movie.id}.jpg"/> 
+            </f:facet>
+ 
+            <h:outputText value="Id:" />
+            <h:outputText value="#{movie.id}" />
+ 
+            <h:outputText value="Nombre" />
+            <h:outputText value="#{movie.nombre}" />
+ 
+            <h:outputText value="Año:" />
+            <h:outputText value="#{movie.año}" />
+ 
+            <h:outputText value="Calificacion:" />
+            <h:outputText value="#{movie.calificacion}" />
+          
+ 
+            <h:outputText value="Descripción:" />
+            <h:outputText value="#{movie.descripcion}" />
+ 
+            <h:outputText value="Elenco:" />
+            <h:outputText value="#{movie.elenco}" />
+            
+            
+            <f:facet name="footer">
+            
+            <p:commandButton update=":form:movieDetail" oncomplete="PF('movieDialog').show()" icon="pi pi-search" value = "editar" >
+                    <f:setPropertyActionListener value="#{movie}" target="#{imagesView.selectedMovies}" />
+                </p:commandButton>
+                
+             <p:commandButton update=":form:movieDetailDelete" oncomplete="PF('movieDialogDelete').show()" icon="pi pi-search" value = "eliminar" >
+                    <f:setPropertyActionListener value="#{movie}" target="#{imagesView.selectedMovies}" />
+                </p:commandButton>
+                
+                
+                   
+             <p:commandButton update=":form:movieDetailQualify" oncomplete="PF('movieDialogQualify').show()" icon="pi pi-search" value = "calificar" >
+                    <f:setPropertyActionListener value="#{movie}" target="#{imagesView.selectedMovies}" />
+                </p:commandButton>
+                
+           
+       
+     
+                
+            </f:facet>
+        
+        </h:panelGrid>
+    </p:carousel>
+    
+          <p:commandButton oncomplete="PF('movieDialogCreate').show()" icon="pi pi-search" value = "Crear" >
+         </p:commandButton>  
+         <p:commandButton  update=":form:carousel" icon="pi pi-search" actionListener = "#{imagesView.seeLastMovies}" value = "Listar Ultimas 5" >
+          </p:commandButton>    
+          <p:commandButton  update=":form:carousel" icon="pi pi-search" actionListener = "#{imagesView.seeMovies}" value = "Listar Todas" >
+          </p:commandButton>  
+ 
+    
+    <p:dialog header="Editar Pelicula" widgetVar="movieDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false"
+     heigth="1000">
+        <p:outputPanel id="movieDetail" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty imagesView.selectedMovies}" columnClasses="label,value">
+                <f:facet name="header">
+                    <p:graphicImage name="images/#{imagesView.selectedMovies.id}.jpg"/> 
+                </f:facet>
+ 
+                <h:outputText value="Id:" />
+                <h:outputText value="#{imagesView.selectedMovies.id}" />
+ 
+                <h:outputText value="nombre" />
+                <h:inputText value="#{imagesView.selectedMovies.nombre}" />
+ 
+                <h:outputText value="Año:" />
+                <h:inputText value="#{imagesView.selectedMovies.año}" style="color:Blue"/>
+ 
+                <h:outputText value="Calificación" />
+                <h:inputText value="#{imagesView.selectedMovies.calificacion}" />
+                
+                <h:outputText value="Descripcion" />
+                <h:inputText value="#{imagesView.selectedMovies.descripcion}" />
+                
+                <h:outputText value="Elenco" />
+                <h:inputText value="#{imagesView.selectedMovies.elenco}" />
+                
+                
+                <p:commandButton update=":form:carousel" oncomplete="PF('movieDialog').hide()" icon="pi pi-search" actionListener = "#{imagesView.updateMovie}" value = "editar" >
+                </p:commandButton>
+                
+                
+                
+                
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+    
+    
+    <p:dialog header="Eliminar Pelicula" widgetVar="movieDialogDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="movieDetailDelete" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty imagesView.selectedMovies}" columnClasses="label,value">
+                <f:facet name="header">
+                    <p:graphicImage name="images/#{imagesView.selectedMovies.id}.jpg"/> 
+                </f:facet>
+                
+                <h:outputText value="¿ Estas seguro que deseas eliminar esta pelicula?" />
+                <h:outputText value="" />
+ 
+                <h:outputText value="Id:" />
+                <h:outputText value="#{imagesView.selectedMovies.id}" />
+ 
+                <h:outputText value="nombre" />
+                <h:outputText value="#{imagesView.selectedMovies.nombre}" />
+ 
+                <h:outputText value="Año:" />
+                <h:outputText value="#{imagesView.selectedMovies.año}" style="color:Blue"/>
+ 
+                <h:outputText value="Calificación" />
+                <h:outputText value="#{imagesView.selectedMovies.calificacion}" />
+                
+                              
+                <p:commandButton update=":form:carousel" oncomplete="PF('movieDialogDelete').hide()" icon="pi pi-search" actionListener = "#{imagesView.deleteMovie}" value = "eliminar" >
+                </p:commandButton>
+                
+                
+                
+                
+            </p:panelGrid>
+        </p:outputPanel>
+         </p:dialog>
+      
+                
+         <p:dialog header="Crear Pelicula" widgetVar="movieDialogCreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="movieDetailCreate" style="text-align:center;">
+            <p:panelGrid  columns="2"  columnClasses="label,value">
+               
+ 
+                <h:outputText value="Id:(Numerico)" />
+                 <h:inputText value="#{imagesView.createdMovies.id}" />
+ 
+                <h:outputText value="nombre" />
+                <h:inputText value="#{imagesView.createdMovies.nombre}" />
+ 
+                <h:outputText value="Año:" />
+                <h:inputText value="#{imagesView.createdMovies.año}" style="color:Blue"/>
+ 
+                <h:outputText value="Calificación:" />
+                <h:inputText value="#{imagesView.createdMovies.calificacion}" />
+                
+                <h:outputText value="Descripcion" />
+                <h:inputText value="#{imagesView.createdMovies.descripcion}" />
+                
+                <h:outputText value="Elenco" />
+                <h:inputText value="#{imagesView.createdMovies.elenco}" />
+                
+                
+                <p:commandButton update=":form:carousel" oncomplete="PF('movieDialogCreate').hide()" icon="pi pi-search" actionListener = "#{imagesView.createMovie}" value = "Crear" >
+                </p:commandButton>
+                
+                
+                
+                
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog> 
+    
+    
+    
+    
+             <p:dialog header="Calificar Pelicula" widgetVar="movieDialogQualify" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="movieDetailQualify" style="text-align:center;">
+            <p:panelGrid  columns="2"  columnClasses="label,value">
+               
+ 
+                <h:outputText value="Coloca un valor de 1 a 5 para calificar tu pelicula:" />
+                 <h:inputText value="#{imagesView.qualifiedMovies.calificacion}" />
+ 
+               
+                
+                
+                <p:commandButton update=":form:carousel" oncomplete="PF('movieDialogQualify').hide()" icon="pi pi-search" actionListener = "#{imagesView.qualifyMovie}" value = "Calificar" >
+                </p:commandButton>
+                
+                
+                
+                
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog> 
+    
+    
+    
+                
+                
+                
+                
+   
+    
+    
+    
+    
+    
+    
+    
+    
+</h:form>
+
+
+	</h:body>
+
+
+</html>

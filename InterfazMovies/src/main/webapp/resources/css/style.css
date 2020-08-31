@@ -1,0 +1,20 @@
+@charset "UTF-8";
+.principal{
+	width: 1024px;
+	margin: 0 auto;
+}
+
+.cuadro{
+	margin: 0 auto;
+	width:40% !important;
+}
+
+.login{
+	margin: 0px auto;
+}
+
+.panelGrid{
+	margin: 0 auto;
+	width:40% !important;
+}
+

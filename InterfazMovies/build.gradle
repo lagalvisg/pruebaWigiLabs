@@ -1,0 +1,47 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	
+	    
+      compile group: 'com.sun.faces', name: 'jsf-api', version: '2.2.20'
+      compile group: 'com.sun.faces', name: 'jsf-impl', version: '2.2.20'
+      compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
+      compile group: 'org.primefaces', name: 'primefaces', version: '7.0'
+      compile group: 'javax.enterprise', name: 'cdi-api', version: '2.0.SP1'
+      compile group: 'org.projectlombok', name: 'lombok', version: '1.18.10'
+      compile group: 'org.glassfish', name: 'javax.ejb', version: '3.1-b37'
+      compile group: 'javax.faces', name: 'javax.faces-api', version: '2.1'
+      compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+//Thanks for using https://jar-download.com
+
+      implementation 'com.google.code.gson:gson:2.8.5'
+      
+      
+     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.0'
+
+      
+
+}
+
+test {
+	useJUnitPlatform()
+}
